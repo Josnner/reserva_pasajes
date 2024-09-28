@@ -31,7 +31,7 @@ class RegisterPage:
         email = self.driver.find_element(*self.email)
         email.send_keys(user_Email)
     
-    def select_Mailing_Information(self, user_Addres, user_City, user_State, user_Code, country):
+    def select_Mailing_Information(self, user_Addres, user_City, user_State, user_Code, user_country):
         addres = self.driver.find_element(*self.addres)
         addres.send_keys(user_Addres)
         city = self.driver.find_element(*self.city)
@@ -41,7 +41,7 @@ class RegisterPage:
         code = self.driver.find_element(*self.code)
         code.send_keys(user_Code)
         country = Select(self.driver.find_element(*self.country))
-        country.select_by_value(country)
+        country.select_by_value(user_country)
     
     def select_User_Information(self, user_name, user_Password, user_passwrod_confirm):
         username = self.driver.find_element(*self.userName)
