@@ -37,4 +37,3 @@ def step_usuario_registrado(context):
     texto = context.driver.find_element(By.XPATH, "//b[contains(text(), 'Dear')]").text
     comparar_texto = "Dear John Doe,"
     assert texto == comparar_texto, f"Expected message: {comparar_texto}, but got: {texto}"
-    time.sleep(2)
