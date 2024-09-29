@@ -26,24 +26,17 @@ class ReservationPage:
             roundtrip_radio.click()
 
     def select_passenger_count(self, count):
-        pass_dd = Select(self.driver.find_element(*self.pass_dd))
-        pass_dd.select_by_visible_text(count)
+        self._select_dropdown(self.pass_dd, count)
 
     def select_departure(self, city, month, day):
-        depa_dd = Select(self.driver.find_element(*self.depa_dd))
-        depa_dd.select_by_value(city)
-        on_dd = Select(self.driver.find_element(*self.on_dd))
-        day_dd = Select(self.driver.find_element(*self.day_dd))
-        on_dd.select_by_value(month)
-        day_dd.select_by_value(day)
+        self._select_dropdown(self.depa_dd, city)
+        self._select_dropdown(self.on_dd, month)
+        self._select_dropdown(self.day_dd, day)
 
     def select_arrival(self, city, month, day):
-        arr_dd = Select(self.driver.find_element(*self.arr_dd))
-        retur_dd = Select(self.driver.find_element(*self.retur_dd))
-        day_retur_dd = Select(self.driver.find_element(*self.day_retur_dd))
-        arr_dd.select_by_value(city)
-        retur_dd.select_by_value(month)
-        day_retur_dd.select_by_value(day)
+        self._select_dropdown(self.arr_dd, city)
+        self._select_dropdown(self.retur_dd, month)
+        self._select_dropdown(self.day_retur_dd, day)
 
     def select_class_and_airline(self, airline):
         first_radio = self.driver.find_element(*self.first_radio)
@@ -51,6 +44,7 @@ class ReservationPage:
             first_radio.click()
         airline_dd = Select(self.driver.find_element(*self.airline_dd))
         airline_dd.select_by_visible_text(airline)
+        
 
     def submit_reservation(self):
         self.driver.find_element(*self.find_flights_btn).click()
@@ -62,4 +56,15 @@ class ReservationPage:
         home_button = self.driver.find_element(*self.home_button)
         assert home_button.is_displayed() and home_button.is_enabled(), "El botón 'Home' no está disponible."
         home_button.click()
+
+    def _select_dropdown(self, locator, value):
+        select_element = Select(WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(locator)))
+        select_element.select_by_value(value)
+
+    def print_airline_options(self):
+        select_element = Select(WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(self.airline_dd)))
+        options = select_element.options
+        print("Opciones disponibles en el menú desplegable de aerolíneas:")
+        for option in options:
+            print(option.text)
 
